@@ -79,11 +79,15 @@ class Register extends Component {
 
                         <div className="card-content">
                         <form onSubmit={this.handleSubmit}>
+                            <input ref={(fuser) => this.fuser = fuser} className="input is-centered" type="text" placeholder="First Name"></input>
+                            <br/><br/>
+                            <input ref={(luser) => this.luser = luser} className="input is-centered" type="text" placeholder="Last Name"></input>
+                            <br/><br/>
                             <input ref={(email) => this.email = email} className="input is-centered" type="email" placeholder="Email"></input>
                             <br/><br/>
-                            <input ref={(user) => this.user = user} className="input is-centered" type="text" placeholder="Username"></input>
-                            <br/><br/>
                             <input ref={(pass) => this.pass = pass} className="input is-centered" type="password" placeholder="Password"></input>
+                            <br/><br/>
+                            <input ref={(conpass) => this.conpass = conpass} className="input is-centered" type="password" placeholder="Confirm Password"></input>
                             <br/><br/>
                             <button type="submit" className="button is-primary is-fullwidth">Enter</button>
                         </form>

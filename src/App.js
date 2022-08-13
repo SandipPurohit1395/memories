@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {app} from "./config/firebase_config"
+// import {app} from "./config/firebase_config"
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import Navigation from './components/navigation'
 import Profile from './components/profile/profile'
@@ -35,25 +35,37 @@ class App extends Component {
         .then(test => console.log(test))
         .catch(() => console.log("Express backend not working"))
 
+        this.setState({
+            logged: null,
+            authenticated: false,
+            loading: false,
+            uid: null
+            })
         // check if authentication changed
-        app.auth().onAuthStateChanged(authUser => {
-            if(authUser) {
-                this.setState({
-                logged: authUser.displayName,
-                uid: authUser.uid,
-                authenticated: true,
-                loading: false
-                }) 
-            } else {
-                this.setState({
-                logged: null,
-                authenticated: false,
-                loading: false,
-                uid: null
-                }) 
-            }
+        // this.setState({
+        //     logged: authUser.displayName,
+        //     uid: authUser.uid,
+        //     authenticated: true,
+        //     loading: false
+        //     }) 
+        // app.auth().onAuthStateChanged(authUser => {
+        //     if(authUser) {
+        //         this.setState({
+        //         logged: authUser.displayName,
+        //         uid: authUser.uid,
+        //         authenticated: true,
+        //         loading: false
+        //         }) 
+        //     } else {
+        //         this.setState({
+        //         logged: null,
+        //         authenticated: false,
+        //         loading: false,
+        //         uid: null
+        //         }) 
+        //     }
         
-        })
+        // })
     }
 
 

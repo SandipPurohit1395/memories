@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import {app} from "../config/firebase_config"
 import ContextUser from '../contextUser'
 import {withRouter} from 'react-router-dom'
 import brand from '../brand.gif';
@@ -18,12 +17,12 @@ class Navigation extends Component {
     }
 
     handleClick = () => {
-        
-        app.auth().signOut().then(() => {
-            this.context.actions.updateAuthLogged(false, null, null)
-        }, function(error) {
-            alert('Sign Out Error', error);
-        });
+        this.context.actions.updateAuthLogged(false, null, null)
+        // app.auth().signOut().then(() => {
+        //     this.context.actions.updateAuthLogged(false, null, null)
+        // }, function(error) {
+        //     alert('Sign Out Error', error);
+        // });
     }
 
     handleSubmit = (e) => {           
@@ -80,7 +79,7 @@ class Navigation extends Component {
             <nav className="navbar is-fixed-top" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     <Link to="/" className="navbar-item">
-                    <img src={brand} alt="" width="90" height="30"/>
+                    <b>Memories</b>
                     </Link>
                 </div>
 
