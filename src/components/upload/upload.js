@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import {app} from "../../config/firebase_config"
-import firebase from "firebase"
-import shortid from 'shortid'
+// import {app} from "../../config/firebase_config"
+// import firebase from "firebase"
+// import shortid from 'shortid'
 import { Redirect } from 'react-router-dom'
 import ContextUser from '../../contextUser'
-import { WithContext as ReactTags } from 'react-tag-input';
 
 // component for the upload page
 class Upload extends Component {
@@ -78,11 +77,13 @@ class Upload extends Component {
             let extension = image.type.split('/')[1]
 
             // generate a unique identifier for photo
-            let uuid = shortid.generate()
+            // let uuid = shortid.generate()
+            let uuid = null
 
             let new_name = uuid + '.' + extension
-            let upload_task = app.storage().ref(`/images/${this.context.state.logged}/${new_name}`).put(image)
-
+            // let upload_task = app.storage().ref(`/images/${this.context.state.logged}/${new_name}`).put(image)
+            
+            let upload_task = null
             // set progress to true to make progress bar appear
             this.setState({progress: true})
 
@@ -95,24 +96,24 @@ class Upload extends Component {
             }, () => {
                 
                 // upload the image to storage
-                app.storage().ref(`images/${this.context.state.logged}`).child(new_name).getDownloadURL().then((url) => {
-                    let description = document.querySelector("#description").value;
+                // app.storage().ref(`images/${this.context.state.logged}`).child(new_name).getDownloadURL().then((url) => {
+                //     let description = document.querySelector("#description").value;
                     
-                    // create photo object with image and other info
-                    app.database().ref('/posts').child(uuid).set({
-                        username: this.context.state.logged,
-                        time: firebase.database.ServerValue.TIMESTAMP,
-                        description: description,
-                        image: url,
-                        tags: this.state.tags.map((tag) => tag.id)
-                    }).then(() => {
-                        // update logged users last_update time
-                        app.database().ref(`/profile/${this.context.state.logged}/last_update`).set(firebase.database.ServerValue.TIMESTAMP)
+                //     // create photo object with image and other info
+                //     app.database().ref('/posts').child(uuid).set({
+                //         username: this.context.state.logged,
+                //        // time: firebase.database.ServerValue.TIMESTAMP,
+                //         description: description,
+                //         image: url,
+                //         tags: this.state.tags.map((tag) => tag.id)
+                //     }).then(() => {
+                //         // update logged users last_update time
+                //       //  app.database().ref(`/profile/${this.context.state.logged}/last_update`).set(firebase.database.ServerValue.TIMESTAMP)
                         
-                        // then redirect to the actual photo post
-                        this.setState({redirect: true, uuid: uuid })
-                    })
-                })
+                //         // then redirect to the actual photo post
+                //         this.setState({redirect: true, uuid: uuid })
+                //     })
+                // })
             })
         } else {
             alert("Select an image before submitting")
@@ -158,11 +159,6 @@ class Upload extends Component {
 
                     <progress className="progress is-primary" ref={(progress) => this.progress = progress} style={{display: this.state.progress === true ? 'block' : 'none' }} max="100" ></progress>
 
-                    <ReactTags tags={this.state.tags}
-                        handleDelete={this.handleDelete}
-                        handleAddition={this.handleAddition}
-                        handleDrag={this.handleDrag}
-                        delimiters={[188, 13, 32]} />
                     <br/>
 
                     <textarea id="description" className="textarea" placeholder="Description"></textarea><br/>
